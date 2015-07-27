@@ -1,5 +1,7 @@
 # rand-barnacle
-Tool to produce random binary files using Mersenne Twister algorithm.
+Tool to produce random binary files using Mersenne Twister algorithm. If
+no seed is supplied, we look at the system clock with at worst millisecond
+precision.
 
 ## Dependencies
 C++11, Boost
@@ -14,4 +16,4 @@ $ make
 --help, -h Print Help   
 --seed, -s Seed Value   
 --output, -o Output File   
---count, -c Output Bute Count   
+--count, -c Output Byte Count   
