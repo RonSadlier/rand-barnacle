@@ -1,5 +1,5 @@
 # rand-barnacle
-Tool to produce random binary files
+Tool to produce random binary files using Mersenne Twister algorithm.
 
 ## Dependencies
 C++11, Boost
