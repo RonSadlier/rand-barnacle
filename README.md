@@ -2,8 +2,7 @@
 Tool to produce random binary files
 
 ## Dependencies
-C++11
-Boost
+C++11, Boost
 
 ## Build
 $ mkdir build   
