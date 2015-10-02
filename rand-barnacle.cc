@@ -27,14 +27,10 @@
  * The main entry point.
  */
 int main(int argc, char *argv[]) {
-	unsigned long seed(0);
+	std::uint_fast64_t seed(0);
 	std::string outputFile;
-	unsigned long count(0);
+	std::uint_fast64_t count(0);
 	
-	char *outBuffer;
-	boost::mt19937 rng;
-	boost::random::uniform_int_distribution<> byte(0,255);
-		
 	namespace po = boost::program_options;
 	
 	po::options_description desc("Options");
@@ -43,16 +39,16 @@ int main(int argc, char *argv[]) {
 		("seed,s", po::value<unsigned long>(&seed), "Seed Value")
 		("output,o", po::value<std::string>(&outputFile)->required(), "Output File")
 		("count,c", po::value<unsigned long>(&count), "Output Byte Count");
-
+		
 	po::variables_map vm;
 	try {
 		po::store(po::parse_command_line(argc, argv, desc), vm);
-
+		
 		if(vm.count("h")) {
 			std::cout << "rand-barnacle" << std::endl << desc << std::endl;
 			exit(0);
 		}
-
+		
 		po::notify(vm);
 	} catch(boost::program_options::required_option &e) {
 		std::cerr << e.what() << std::endl;
@@ -61,7 +57,7 @@ int main(int argc, char *argv[]) {
 		std::cerr << e.what() << std::endl;
 		exit(-1);
 	}
-
+	
 	// If no seed is supplied, we use the system time with high precision.
 	if(seed == 0) {
 		// The actual implementation of microsec_clock is a bit platform
@@ -69,10 +65,7 @@ int main(int argc, char *argv[]) {
 		// we can normally achieve higher resolution.
 		boost::posix_time::time_duration td(boost::posix_time::microsec_clock::universal_time().time_of_day());
 		seed = td.total_microseconds();
-		rng.seed(seed);
 		std::cout << "Seed: " << seed << std::endl;
-	} else {
-		rng.seed(seed);
 	}
 	
 	std::ofstream output(outputFile, std::ios::binary);
@@ -86,16 +79,18 @@ int main(int argc, char *argv[]) {
 		exit(-1);
 	}
 	
-	outBuffer = new char[count];
+	boost::mt19937 rng;
+	rng.seed(seed);
+	boost::random::uniform_int_distribution<> byte(0,255);
+	char* outBuffer = new char[count];
 	
-	for(unsigned long i = 0; i < count; i++) {
+	for(std::size_t i = 0; i < count; i++) {
 		outBuffer[i] = byte(rng);
 	}
 	
 	output.write(outBuffer, count);
+	delete[] outBuffer;
 	output.close();
 	
 	std::cout << "Wrote " << count << " bytes to " << outputFile << std::endl;
-	
-	delete[] outBuffer;
 }
