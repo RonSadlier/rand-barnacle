@@ -18,7 +18,7 @@ $ sudo make install
 
 parameter | name | type | required | default
 --- | --- | --- | --- | ---
---h | *print help* | *none* | no | *none*
---s | *seed value* | Ulong | no | System clock with at worst millisecond precision.
---o | *output file* | string | yes | *none*
---c | *byte count* | Ulong | yes | *none*
+-h (--help) | *print help* | *none* | no | *none*
+-s (--seed) | *seed value* | Ulong | no | System clock with at worst millisecond precision.
+-o (--output) | *output file* | string | yes | *none*
+-c (--count) | *byte count* | Ulong | yes | *none*
