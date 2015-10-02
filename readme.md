@@ -5,12 +5,13 @@ Tool to produce random binary files using Mersenne Twister algorithm.
 * C++11
 * Boost
 
-## Build
+## Installation
 ```shell
 $ mkdir build
 $ cd build
 $ cmake ../
 $ make
+$ sudo make install
 ```
 
 ## Usage
