@@ -31,20 +31,20 @@ int main(int argc, char *argv[]) {
 	std::string outputFile;
 	std::uint_fast64_t count(0);
 	
-	namespace po = boost::program_options;
-	
-	po::options_description desc("Options");
-	desc.add_options()
-		("help,h", "Print help")
-		("seed,s", po::value<unsigned long>(&seed), "Seed Value")
-		("output,o", po::value<std::string>(&outputFile)->required(), "Output File")
-		("count,c", po::value<unsigned long>(&count), "Output Byte Count");
-		
-	po::variables_map vm;
 	try {
+		namespace po = boost::program_options;
+		
+		po::options_description desc("Options");
+		desc.add_options()
+				("help,h", "Print help")
+				("seed,s", po::value<unsigned long>(&seed), "Seed Value")
+				("output,o", po::value<std::string>(&outputFile)->required(), "Output File")
+				("count,c", po::value<unsigned long>(&count), "Output Byte Count");
+		
+		po::variables_map vm;
 		po::store(po::parse_command_line(argc, argv, desc), vm);
 		
-		if(vm.count("h")) {
+		if(vm.count("help")) {
 			std::cout << "rand-barnacle" << std::endl << desc << std::endl;
 			exit(0);
 		}
